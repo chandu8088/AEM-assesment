@@ -3,7 +3,6 @@ package com.adobe.aem.demo.assesment.core.models;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
@@ -13,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Model(adaptables = SlingHttpServletRequest.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class MegaMenuModel {
@@ -43,7 +39,6 @@ public class MegaMenuModel {
             List<ChildPagesBeanModel> childPages  = new ArrayList<>();
             PageManager pageManager = resourceResolver.adaptTo(PageManager.class);
             Page rootPage = Objects.requireNonNull(pageManager).getContainingPage(rootPath);
-            Resource pageResource = resourceResolver.getResource(rootPath);
             Iterator<Page> childResource  =  rootPage.listChildren();
             while (childResource.hasNext()){
                 Page child = childResource.next();
@@ -56,7 +51,7 @@ public class MegaMenuModel {
         }
         catch (NullPointerException e){
             LOGGER.error("Exception while accessing child pages {}",e.getMessage());
-            return null;
+            return Collections.emptyList();
         }
     }
 
