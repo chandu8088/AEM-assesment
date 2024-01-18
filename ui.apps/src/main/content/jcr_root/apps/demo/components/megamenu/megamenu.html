@@ -1,0 +1,14 @@
+<sly data-sly-use.blogs="com.adobe.aem.demo.assesment.core.models.MegaMenuModel">
+	<sly data-sly-list.parent="${blogs.childrenRoot}">
+    	<a href="${parent.path @extension='html'}">${parent.name}</a>
+        <br>
+        <sly data-sly-list.child="${parent.childPages}">
+        	---><a href="${child.path @extension='html'}">${child.name}</a>
+            <br>
+            <sly data-sly-list.grandChild="${child.childPages}">
+        		-----------><a href="${grandChild.path @extension='html'}">${grandChild.name}</a>
+                <br>
+        	</sly>
+        </sly>
+    </sly>
+</sly>
